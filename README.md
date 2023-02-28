@@ -10,6 +10,3 @@
 
 # you will need to replace my database informaiton with  your own (remember to add your password) this is in the .env file
 # the setup is based on a database called 'portal' and with a collections called 'users'
-
-
-# 

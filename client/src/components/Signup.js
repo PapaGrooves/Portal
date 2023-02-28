@@ -78,7 +78,7 @@ function Signup() {
       [showPasswordField]: !values[showPasswordField],
     })
   }
-  console.log('submnit');
+  console.log('submit');
 
   const handleSubmit = async (event) => {
     event.preventDefault()
