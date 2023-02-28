@@ -14,10 +14,10 @@ const UserSchema = new mongoose.Schema({
     default: Date.now,
   },
   // unsure if this is correct
-  // is_admin: {
-  //   type: Boolean,
-  //   default: Boolean.false,
-  // },
+  is_admin: {
+    type: Number,
+    default: 0,
+  },
 })
 
 const User = mongoose.model('User', UserSchema)

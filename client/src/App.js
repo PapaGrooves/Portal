@@ -1,7 +1,4 @@
 import { useState, useEffect, createContext } from 'react'
-import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider } from '@mui/material/styles'
-import theme from './styles/theme'
 import Routes from './Routes'
 
 export const UserContext = createContext({})
@@ -31,10 +28,7 @@ function App() {
 
   return (
     <UserContext.Provider value={userSession}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
         {loading ? <>loading...</> : <Routes />}
-      </ThemeProvider>
     </UserContext.Provider>
   )
 }

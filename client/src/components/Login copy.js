@@ -1,9 +1,10 @@
+
 import React, { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
-
 import validator from 'validator'
 import { regexPassword } from '../utils'
+
 import {
   Paper,
   Container,
@@ -27,63 +28,51 @@ import {
   Visibility,
   VisibilityOff,
 } from '@mui/icons-material'
-console.log('signup function login');
 
-function Signup() {
+console.log('function login');
+function Login({}) {
   const navigate = useNavigate();
+
   const [values, setValues] = useState({
     email: '',
     password: '',
-    repeatPassword: '',
     showPassword: false,
-    showRepeatPassword: false,
+    is_admin: false,
   })
   const [errors, setErrors] = useState({
     email: false,
     password: false,
-    repeatPassword: false,
     fetchError: false,
     fetchErrorMsg: '',
   })
 
   const handleChange = (fieldName) => (event) => {
     const currValue = event.target.value
-    // eslint-disable-next-line default-case
-    switch (fieldName) {
-      case 'email':
-        validator.isEmail(currValue)
-          ? setErrors({ ...errors, email: false })
-          : setErrors({ ...errors, email: true })
-        break
+    let isCorrectValue =
+      fieldName === 'email'
+        ? validator.isEmail(currValue)
+        : regexPassword.test(currValue)
 
-      case 'password':
-        regexPassword.test(currValue)
-          ? setErrors({ ...errors, password: false })
-          : setErrors({ ...errors, password: true })
-        break
+    isCorrectValue
+      ? setErrors({ ...errors, [fieldName]: false })
+      : setErrors({ ...errors, [fieldName]: true })
 
-      case 'repeatPassword':
-        currValue === values.password
-          ? setErrors({ ...errors, repeatPassword: false })
-          : setErrors({ ...errors, repeatPassword: true })
-        break
-    }
     setValues({ ...values, [fieldName]: event.target.value })
   }
 
-  const handleShowPassword = (showPasswordField) => {
+  const handleShowPassword = () => {
     setValues({
       ...values,
-      [showPasswordField]: !values[showPasswordField],
+      showPassword: !values.showPassword,
     })
   }
-  console.log('submit');
+  console.log('handle submit');
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
     try {
-      const res = await fetch('/api/register', {
+      const res = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,6 +80,7 @@ function Signup() {
         body: JSON.stringify({
           email: values.email,
           password: values.password,
+          is_admin: values.false,
         }),
       })
 
@@ -102,12 +92,15 @@ function Signup() {
           fetchErrorMsg: error.msg,
         })
       }
-      // redirecting user to login on successful registration
-      navigate('/');
+      // using the navigate function to redirect the user to the dashboard
+      // logic for checking user status
+      navigate('/dashboard');
+
       const data = await res.json()
+      console.log({ data })
+
       // this is just a visual feedback for user for this demo
       // this will not be an error, rather we will show a different UI or redirect user to dashboard
-      // ideally we also want a way to confirm their email or identity
       setErrors({
         ...errors,
         fetchError: true,
@@ -116,14 +109,11 @@ function Signup() {
       setValues({
         email: '',
         password: '',
-        is_admin: '',
-        repeatPassword: '',
+        is_admin: false,
         showPassword: false,
-        showRepeatPassword: false,
       })
-    } catch (error) {
       return
-      // eslint-disable-next-line no-unreachable
+    } catch (error) {
       setErrors({
         ...errors,
         fetchError: true,
@@ -135,7 +125,7 @@ function Signup() {
 
   return (
     <>
-      <Container sx={{ marginTop: 'calc(100vh - 45%)' }} maxWidth='sm'>
+      <Container sx={{ marginTop: 'calc(100vh - 40%)' }} maxWidth='xs'>
         <Paper elevation={6}>
           <Container
             maxWidth='sm'
@@ -154,7 +144,7 @@ function Signup() {
               }}>
               <FaceIcon sx={{ fontSize: 70 }} />
             </Avatar>
-            <h2>Register a new account</h2>
+            <h2>Login</h2>
           </Container>
           <Stack
             component='form'
@@ -171,6 +161,7 @@ function Signup() {
               error={errors.email}
               helperText={errors.email && 'Please insert a valid email address'}
             />
+        
 
             <FormControl variant='filled'>
               <InputLabel htmlFor='password-field'>Password</InputLabel>
@@ -184,49 +175,13 @@ function Signup() {
                   <InputAdornment position='end'>
                     <IconButton
                       aria-label='toggle password visibility'
-                      onClick={() => handleShowPassword('showPassword')}
+                      onClick={handleShowPassword}
                       edge='end'>
                       {values.showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 }
               />
-
-              <FormHelperText error={errors.password}>
-                Password must be at least 8 characters, have one symbol, 1
-                uppercase letter, 1 lowercase and 1 digit
-              </FormHelperText>
-            </FormControl>
-
-            <FormControl variant='filled'>
-              <InputLabel htmlFor='password-repeat-field'>
-                Repeat password
-              </InputLabel>
-              <FilledInput
-                id='password-repeat-field'
-                type={values.showRepeatPassword ? 'text' : 'password'}
-                value={values.repeatPassword}
-                onChange={handleChange('repeatPassword')}
-                endAdornment={
-                  <InputAdornment position='end'>
-                    <IconButton
-                      aria-label='toggle password visibility'
-                      onClick={() => handleShowPassword('showRepeatPassword')}
-                      edge='end'>
-                      {values.showRepeatPassword ? (
-                        <VisibilityOff />
-                      ) : (
-                        <Visibility />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-              {errors.repeatPassword && (
-                <FormHelperText error={errors.repeatPassword}>
-                  Password must be the same as above
-                </FormHelperText>
-              )}
             </FormControl>
             <Box
               sx={{
@@ -237,10 +192,11 @@ function Signup() {
                 variant='contained'
                 size='large'
                 type='submit'
+                disabled={errors.email || errors.password}
                 sx={{
                   minWidth: '70%',
                 }}>
-                Sign me up!
+                Login
               </Button>
             </Box>
             {errors.fetchError && (
@@ -248,9 +204,9 @@ function Signup() {
             )}
             <Divider />
             <Typography paragraph align='center'>
-              Already have an account?{' '}
-              <Link component={RouterLink} to='/'>
-                Login here
+              Don't have an account yet?{' '}
+              <Link component={RouterLink} to='/signup'>
+                Sign up here
               </Link>
             </Typography>
           </Stack>
@@ -260,4 +216,4 @@ function Signup() {
   )
 }
 
-export default Signup
+export default Login
