@@ -139,7 +139,20 @@ function Login({ }) {
             onClick={togglePassword}
           />
         </input>
-
+        <button
+        type='submit'
+        disabled={errors.email || errors.password}
+        >
+          Login
+          </button>
+          
+          {errors.fetchError && (
+              <FormHelperText error>{errors.fetchErrorMsg}</FormHelperText>
+            )}
+          Don't have an account yet?{' '}
+              <Link component={RouterLink} to='/signup'>
+                Sign up here
+              </Link>
       </form>
     </>
   )
