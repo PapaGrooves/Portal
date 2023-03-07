@@ -3,6 +3,8 @@ import { useState } from 'react';
 import ResponsiveAppBar from './Navigation';
 import { Grid, Card, CircularProgress, CardContent, Typography } from '@mui/material';
 import departmentData from './departmentData';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // function Copyright() {
 //     return (
 //       <Typography variant="body2" color="text.secondary" align="center">
@@ -20,20 +22,22 @@ import departmentData from './departmentData';
 // const toFirstCharUppercase = name =>
 // name.charAt(0).toUppercase() + name.slice(1);
 
-const Dashboard = props => {
-  const { history } = props;
+
+const Dashboard = () => {
   const [depsData, setDepsData] = useState(departmentData);
   
-
+  const navigate = useNavigate();
+  
+  // const { depID } = useParams();
 const getDepartmentCard = (depID) => {
   console.log(depsData[`${depID}`])
-  const { id, name } = depsData[`${depID}`];
+  const { id, name, img } = depsData[`${depID}`];
 
   return(
     <Grid item xs={4} key={depID}>
-      <Card onClick={() => history.push(`/${depID}`)}>
-        <CardContent>
-          <Typography>{`${id}. ${name}`}</Typography>
+      <Card onClick={() => navigate(`/department:${depID}`)}>
+        <CardContent> {`${img}`}
+          <Typography>{`${name}`}</Typography>
         </CardContent>
       </Card>
     </Grid>
