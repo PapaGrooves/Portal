@@ -3,8 +3,32 @@ import React, { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 import validator from 'validator'
-import { regexPassword } from '../utils'
+import { regexPassword } from '../utils';
+import '../scss/app.css';
 
+import {
+  Paper,
+  Container,
+  Link,
+  Stack,
+  Button,
+  Box,
+  Divider,
+  Avatar,
+  Typography,
+  TextField,
+  FilledInput,
+  InputAdornment,
+  IconButton,
+  InputLabel,
+  FormControl,
+  FormHelperText,
+} from '@mui/material'
+import {
+  Face as FaceIcon,
+  Visibility,
+  VisibilityOff,
+} from '@mui/icons-material'
 
 console.log('function login');
 function Login({ }) {
@@ -112,7 +136,8 @@ function Login({ }) {
   return (
     <>
 
-      <form className='login'>
+      <form className='login'
+      onSubmit={handleSubmit}>
         <h1>Login</h1>
 
         <label htmlFor='email'>Email</label>
@@ -123,7 +148,8 @@ function Login({ }) {
           value={values.email}
           onChange={handleChange('email')}
           error={errors.email}
-          helperText={errors.email && 'Please insert a valid email address'} />
+          helperText={errors.email && 'Please insert a valid email address'}
+           />
 
         <label htmlFor='password'>Password</label>
 
@@ -146,13 +172,15 @@ function Login({ }) {
           Login
           </button>
           
+          {/* FIXME remove MaterialUI components */}
           {errors.fetchError && (
-              <FormHelperText error>{errors.fetchErrorMsg}</FormHelperText>
+              <p error>{errors.fetchErrorMsg}</p>
             )}
           Don't have an account yet?{' '}
-              <Link component={RouterLink} to='/signup'>
+              {/* <Link component={RouterLink} to='/signup'>
                 Sign up here
-              </Link>
+              </Link> */}
+              {/* FIXME end */}
       </form>
     </>
   )

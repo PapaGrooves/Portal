@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/gsambrotta/auth-session-mern-boilerplate/issues"
   },
-  "homepage": "https://github.com/gsambrotta/auth-session-mern-boilerplate#readme"
+  "homepage": "https://github.com/gsambrotta/auth-session-mern-boilerplate#readme",
+  "dependencies": {
+    "react-router-dom": "^6.8.2"
+  }
 }

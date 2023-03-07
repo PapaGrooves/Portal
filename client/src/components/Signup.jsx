@@ -12,7 +12,6 @@ import {
   Button,
   Box,
   Divider,
-  Avatar,
   Typography,
   TextField,
   FilledInput,
@@ -23,7 +22,6 @@ import {
   FormHelperText,
 } from '@mui/material'
 import {
-  Face as FaceIcon,
   Visibility,
   VisibilityOff,
 } from '@mui/icons-material'
@@ -77,7 +75,7 @@ function Signup() {
       [showPasswordField]: !values[showPasswordField],
     })
   }
-  console.log('submit');
+  console.log('submnit');
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -135,6 +133,7 @@ function Signup() {
 
   return (
     <>
+    <div className='signup_wrap'>
       <Container sx={{ marginTop: 'calc(100vh - 45%)' }} maxWidth='sm'>
         <Paper elevation={6}>
           <Container
@@ -144,16 +143,7 @@ function Signup() {
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              paddingTop: '20px',
             }}>
-            <Avatar
-              sx={{
-                width: 80,
-                height: 80,
-                boxShadow: '0px 0px 8px rgba(131,153,167,0.99)',
-              }}>
-              <FaceIcon sx={{ fontSize: 70 }} />
-            </Avatar>
             <h2>Register a new account</h2>
           </Container>
           <Stack
@@ -256,6 +246,7 @@ function Signup() {
           </Stack>
         </Paper>
       </Container>
+      </div>
     </>
   )
 }
