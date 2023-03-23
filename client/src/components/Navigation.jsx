@@ -11,10 +11,14 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from 'react-router-dom';
 
-const pages = ['Dashboard', 'Play', 'Learn', 'Profile'];
-const settings = ['Doctors', 'Medications', 'Calendar', 'Progress', 'Logout'];
+const play = <Link to={"/play"}>Play</Link>
+const learn = <Link to={"/learn"}>Learn</Link>
+const profile = <Link to={"/profile"}>Profile</Link>
+const logout = <Link to={"/"}>Logout</Link>
+const pages = [play, learn, profile];
+const settings = [logout];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -36,15 +40,18 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
+    <AppBar class="app_bar_wrap" position="static">
+
+      <Container maxWidth="xl" className='app_bar'>
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+
+{/* Logo at large screen size */}
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            // NOTE link here
+            href="/dashboard"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -55,10 +62,11 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            HospitalPortal
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            {/* Burger menu on small screensize */}
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -94,12 +102,13 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+      
+      {/* Logo at smaller screen size */}
           <Typography
             variant="h5"
             noWrap
             component="a"
-            href=""
+            href="/dashboard"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -111,8 +120,9 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            HospitalPortal
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button

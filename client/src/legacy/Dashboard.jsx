@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
 import ResponsiveAppBar from './Navigation';
-import { Grid, Card, CircularProgress, CardContent, Typography } from '@mui/material';
+import { Grid, Card, CircularProgress, CardContent, Typography, CardMedia } from '@mui/material';
 import departmentData from './departmentData';
-import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // function Copyright() {
 //     return (
 //       <Typography variant="body2" color="text.secondary" align="center">
@@ -25,21 +25,32 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [depsData, setDepsData] = useState(departmentData);
-  
-  const navigate = useNavigate();
-  
-  // const { depID } = useParams();
-const getDepartmentCard = (depID) => {
-  console.log(depsData[`${depID}`])
-  const { id, name, img } = depsData[`${depID}`];
 
+  const navigate = useNavigate();
+  // const mystyle ={
+    //   background: "`${img}`" 
+    // };
+    
+    const getDepartmentCard = (depID) => {
+      // console.log(depsData[`${depID}`])
+      const {name} = depsData[`${depID}`];
+      // let link = "./images/departments/"+`${depID}`+".jpg";
   return(
-    <Grid item xs={4} key={depID}>
-      <Card onClick={() => navigate(`/department:${depID}`)}>
-        <CardContent> {`${img}`}
+    <Grid className='dash_grid' item xs={4} key={depID}>
+{/* <Link to={`/department/${depID}`}> */}
+      <Card className='dash_card' 
+      onClick={() => navigate(`department:${depID}`)}
+      >
+        <CardContent className='dash_content'>
+          <CardMedia className="dash_media" />
+          {/* {`${img}`} */}
+          {/* <img src={url+`${id}`+image} alt="" /> */}
+          {/* <img src={`${img}`} /> */}
           <Typography>{`${name}`}</Typography>
         </CardContent>
       </Card>
+        {/* </Link> */}
+      
     </Grid>
   );
 };
@@ -49,7 +60,7 @@ const getDepartmentCard = (depID) => {
         <ResponsiveAppBar />
 
         {depsData ? ( 
-      <Grid container spacing={2}>
+      <Grid container spacing={1}>
        {Object.keys(depsData).map((depID) =>
        getDepartmentCard(depID)
        )}

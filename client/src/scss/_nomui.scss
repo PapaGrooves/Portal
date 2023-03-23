@@ -1,0 +1,63 @@
+
+
+.play_cards {
+  width: 100vw;
+  height: 100%;
+
+  .card_grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 64px;
+
+    .card_card_2 {
+      display: block !important;
+      margin: auto auto;
+      .card_content {
+        padding-bottom: 0;
+      }
+    }
+    .card_card {
+      background: rgb(122,164,214);
+      background: linear-gradient(306deg, rgba(122,164,214,1) 0%, rgba(116,224,233,1) 90%);
+  
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    .card_title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      background-color: rgb(31, 224, 166);
+    }
+    .button_wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+      // justify-content: end;
+
+    .card_button {
+      color: rgb(31, 224, 166);
+      background-color: rgba(111, 110, 110, 0.25);
+      
+      &:hover {
+        color:rgb(23, 91, 71);
+      }
+      
+    }
+  }
+  }
+  }
+}
+
+
+.app_bar_wrap {
+width: 100vw;
+color: white;
+.app_bar {
+  background-color: rgba(0 ,0 ,0, 0.75);
+max-width: 100%;
+}
+}
