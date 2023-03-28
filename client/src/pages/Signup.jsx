@@ -20,6 +20,8 @@ import {
   InputLabel,
   FormControl,
   FormHelperText,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 console.log("signup function login");
@@ -27,8 +29,8 @@ console.log("signup function login");
 // NOTE chatGPT says:
 // There are a few things that could be improved in the code:
 
-//     Error handling: When an error occurs, the setErrors function is called with the new error state, 
-// which overwrites all the previous error state. Instead, you could use the spread operator to update 
+//     Error handling: When an error occurs, the setErrors function is called with the new error state,
+// which overwrites all the previous error state. Instead, you could use the spread operator to update
 // only the error state that needs to be changed. For example:
 
 // setErrors(prevErrors => ({
@@ -38,48 +40,62 @@ console.log("signup function login");
 
 // This way, you're preserving the previous state and only changing the email field.
 
-// Password validation: The password validation could be improved by providing more specific error messages to the user. 
-// For example, you could have an error message that tells the user that the password must be at least 8 characters long, 
+// Password validation: The password validation could be improved by providing more specific error messages to the user.
+// For example, you could have an error message that tells the user that the password must be at least 8 characters long,
 // another message that tells the user that the password must contain at least one uppercase letter, etc.
 
-// Code organization: The code could be organized into separate functions for better readability and maintainability. 
+// Code organization: The code could be organized into separate functions for better readability and maintainability.
 // For example, you could have a separate function for handling form submission, a separate function for handling input validation, etc.
 
 // Styling: The styling of the form could be improved by using a more consistent design, adding labels to the form fields, etc.
 
-// Input type validation: The dob field is currently not being validated with a regular expression, 
+// Input type validation: The dob field is currently not being validated with a regular expression,
 // which could lead to incorrect input data. You could add a regular expression to validate the date input.
 
-
-
-
-
 function Signup() {
-    // useNavigate allows for programmatic navigation between pages
+  // useNavigate allows for programmatic navigation between pages
   const navigate = useNavigate();
-    // set up state variables using the useState hook
+  // set up state variables using the useState hook
   const [values, setValues] = useState({
+    fname: "",
+    lname: "",
     email: "",
     password: "",
     repeatPassword: "",
-    dob:"",
+    dob: "",
+    sex: "",
     showPassword: false,
     showRepeatPassword: false,
   });
   const [errors, setErrors] = useState({
+    fname: false,
+    lname: false,
     email: false,
     password: false,
     repeatPassword: false,
-    dob:false,
+    dob: false,
+    sex: false,
     fetchError: false,
     fetchErrorMsg: "",
   });
-  
+
   // handleChange function updates state variables as user inputs data
   const handleChange = (fieldName) => (event) => {
     const currValue = event.target.value;
-       // validate input based on field name
+    // validate input based on field name
     switch (fieldName) {
+      case "fname":
+        validator.isAlphanumeric
+          ? setErrors({ ...errors, fname: false })
+          : setErrors({ ...errors, fname: true });
+        break;
+
+      case "lname":
+        validator.isAlphanumeric
+          ? setErrors({ ...errors, lname: false })
+          : setErrors({ ...errors, lname: true });
+        break;
+
       case "email":
         validator.isEmail(currValue)
           ? setErrors({ ...errors, email: false })
@@ -97,13 +113,18 @@ function Signup() {
           ? setErrors({ ...errors, repeatPassword: false })
           : setErrors({ ...errors, repeatPassword: true });
         break;
-        case "dob":
-          validator.isDate(currValue)
+      case "dob":
+        validator.isDate(currValue)
           ? setErrors({ ...errors, dob: false })
           : setErrors({ ...errors, dob: true });
         break;
+      case "sex":
+        validator.isUppercase(currValue)
+          ? setErrors({ ...errors, sex: false })
+          : setErrors({ ...errors, sex: true });
+        break;
     }
-        // update state variable with new value
+    // update state variable with new value
     setValues({ ...values, [fieldName]: event.target.value });
   };
 
@@ -120,7 +141,7 @@ function Signup() {
     event.preventDefault();
 
     try {
-            // use fetch API to make a POST request to server to register user
+      // use fetch API to make a POST request to server to register user
       const res = await fetch("/api/register", {
         method: "POST",
         headers: {
@@ -133,7 +154,7 @@ function Signup() {
       });
 
       if (!res.ok) {
-                // if there is an error with server response, update state variables with error information
+        // if there is an error with server response, update state variables with error information
         const error = await res.json();
         return setErrors({
           ...errors,
@@ -143,20 +164,23 @@ function Signup() {
       }
       // redirecting user to login on successful registration
       navigate("/");
-            // show success message to user after registration
+      // show success message to user after registration
       const data = await res.json();
       setErrors({
         ...errors,
         fetchError: true,
         fetchErrorMsg: data.msg,
       });
-            // reset form fields after successful registration 
+      // reset form fields after successful registration
       setValues({
+        fname: "",
+        lname: "",
         email: "",
         password: "",
         is_admin: "",
         repeatPassword: "",
         dob: "",
+        sex: "",
         showPassword: false,
         showRepeatPassword: false,
       });
@@ -197,6 +221,7 @@ function Signup() {
               spacing={6}
               sx={{ bgcolor: "#f5f5f6", padding: "40px" }}
             >
+
               <TextField
                 variant="filled"
                 type="email"
@@ -208,6 +233,26 @@ function Signup() {
                   errors.email && "Please insert a valid email address"
                 }
               />
+
+<FormControl variant="filled">
+                <InputLabel htmlFor="First Name">First Name</InputLabel>
+                <FilledInput
+                  value={values.fname}
+                  onChange={handleChange("fname")}
+                  error={errors.fname}
+                  endAdornment={<InputAdornment position="end" />}
+                />
+              </FormControl>
+
+              <FormControl variant="filled">
+                <InputLabel htmlFor="Last Name">Last Name</InputLabel>
+                <FilledInput
+                  value={values.lname}
+                  onChange={handleChange("lname")}
+                  error={errors.lname}
+                  endAdornment={<InputAdornment position="end" />}
+                />
+              </FormControl>
 
               <FormControl variant="filled">
                 <InputLabel htmlFor="password-field">Password</InputLabel>
@@ -272,8 +317,33 @@ function Signup() {
                 )}
               </FormControl>
 
+              <FormControl variant="filled">
+                <InputLabel htmlFor="dob">Date of Birth</InputLabel>
+
+                <FilledInput
+                  // variant="filled"
+                  type="date"
+                  label="Date of Birth"
+                  value={values.dob}
+                  onChange={handleChange("dob")}
+                  error={errors.dob}
+                  endAdornment={
+                    <InputAdornment position="end"></InputAdornment>
+                  }
+                />
+              </FormControl>
+
               <FormControl>
-                {/* FIXME include date of birth "dob" */}
+                <InputLabel htmlFor="sex">Sex</InputLabel>
+
+                <Select
+                  // value={sex}
+                  label="Sex"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={"M"}>Male</MenuItem>
+                  <MenuItem value={"F"}>Female</MenuItem>
+                </Select>
               </FormControl>
               <Box
                 sx={{

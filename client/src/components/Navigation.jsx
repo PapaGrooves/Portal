@@ -13,10 +13,15 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 
-const play = <Link to={"/play"}>Play</Link>
-const learn = <Link to={"/learn"}>Learn</Link>
-const profile = <Link to={"/profile"}>Profile</Link>
-const logout = <Link to={"/"}>Logout</Link>
+// const logOut = () => {
+//   window.localStorage.clear();
+// }
+
+const play = <Link style={{padding: "2rem"}} to={"/play"}>Play</Link>
+const learn = <Link style={{padding: "2rem"}} to={"/learn"}>Learn</Link>
+const profile = <Link style={{padding: "2rem"}} to={"/profile"}>Profile</Link>
+const logout = <Link onClick={window.localStorage.clear()} style={{padding: "2rem"}} to={"/"}>Logout</Link>
+
 const pages = [play, learn, profile];
 const settings = [logout];
 

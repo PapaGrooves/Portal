@@ -3,10 +3,15 @@
   padding: 0;
   box-sizing: border-box;
 }
-* body {
+
+body {
   background: rgb(31, 54, 78);
   background: linear-gradient(0deg, rgb(31, 54, 78) 0%, rgb(62, 109, 156) 97%);
   min-height: 100vh;
+}
+
+img {
+  display: block;
 }
 
 .page_heading {
@@ -93,6 +98,12 @@ a {
 .app_bar_wrap .app_bar {
   background-color: rgba(0, 0, 0, 0.75);
   max-width: 100%;
+}
+
+.signup_wrap {
+  padding: 16px;
+  width: 100%;
+  height: 100%;
 }
 
 .react-calendar {
@@ -210,4 +221,60 @@ a {
 }
 .react-calendar .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
+}
+
+.big_card {
+  background-color: beige;
+  margin: 32px;
+  border-radius: 16px;
+  padding-bottom: 16px;
+}
+.big_card .top_row .image {
+  width: 100%;
+}
+.big_card .top_row .image img {
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
+  width: 100%;
+}
+.big_card .top_row .title {
+  text-align: center;
+  margin-top: 8px;
+}
+.big_card .description {
+  margin: 16px;
+}
+.big_card .description .map {
+  max-width: 700px;
+  height: auto;
+  margin: auto;
+}
+.big_card .description .map img {
+  width: 100%;
+}
+
+@media screen and (min-width: 650px) {
+  .big_card {
+    max-width: 850px;
+    margin: 32px auto;
+  }
+  .big_card .top_row {
+    background-color: rgb(31, 224, 166);
+    display: flex;
+    flex-direction: row;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+  }
+  .big_card .top_row .image {
+    width: 300px;
+  }
+  .big_card .top_row .image img {
+    border-top-right-radius: 0px;
+  }
+  .big_card .top_row .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+  }
 }/*# sourceMappingURL=app.css.map */

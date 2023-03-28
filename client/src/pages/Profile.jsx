@@ -1,5 +1,5 @@
 import ResponsiveAppBar from "../components/Navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import {
@@ -19,6 +19,21 @@ import {
 import Patient from "../assets/images/patient.jpg"
 
 const Profile = () => {
+
+  const [info, setInfo] = useState(null);
+  useEffect(() => {
+    const fetchInfo = async () => {
+      const response = await fetch('http://localhost:3000/api/info');
+      const json = await response.json();
+
+      if(response.ok) {
+        setInfo(json)
+      }
+    }
+
+    fetchInfo()
+  }, [])
+
 
   function createData(name, dosage) {
     return { name, dosage };
@@ -41,8 +56,8 @@ const Profile = () => {
           <Card className="card_card card_card_2" sx={{ width: 260 , height:390}}>
             <CardMedia component="img" height="250" image={Patient} alt="" />
             <CardContent className="card_content">
-              <Typography>Full Name:</Typography>
-              <Typography>Age:</Typography>
+                <Typography>Full Name: </Typography>
+              <Typography>DoB:</Typography>
               <Typography>M/F:</Typography>
               <Typography>Email:</Typography>
             </CardContent>
