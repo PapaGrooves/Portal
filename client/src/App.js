@@ -13,12 +13,36 @@ import theme from './styles/theme'
 
 import { Route, Routes } from 'react-router-dom'
 import { useContext } from 'react'
-import ResponsiveAppBar from './components/Navigation'
-
+import axios from 'axios'
 
 
 
 function App() {
+
+
+  // state = {
+  //   fname: '',
+  //   lname: '',
+  //   email: '',
+  //   dob: '',
+  //   sex: '',
+  // }
+
+  // componentDidMount = () => {
+  //   this.getUserData();
+  // };
+
+  // getUserData = () => {
+  //   axios.get('/api')
+  //   .then(() => {
+  //     // const data = response.data;
+  //     console.log('Data has been recieved!');
+  //   })
+  //   .catch(() => {
+  //     alert('Error retrieving data!');
+  //   });
+  // }
+
   const [loading, setLoading] = useState(true)
   const [userSession, setUserSession] = useState(true)
   
@@ -43,6 +67,8 @@ function App() {
 
   const UserContext = createContext({})
   const userContext = useContext(UserContext)
+
+
   return (
     <UserContext.Provider value={userSession}>
       <ThemeProvider theme={theme}>

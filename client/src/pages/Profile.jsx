@@ -17,23 +17,9 @@ import {
   Paper,
 } from "@mui/material";
 import Patient from "../assets/images/patient.jpg"
+import axios from "axios";
 
 const Profile = () => {
-
-  const [info, setInfo] = useState(null);
-  useEffect(() => {
-    const fetchInfo = async () => {
-      const response = await fetch('http://localhost:3000/api/info');
-      const json = await response.json();
-
-      if(response.ok) {
-        setInfo(json)
-      }
-    }
-
-    fetchInfo()
-  }, [])
-
 
   function createData(name, dosage) {
     return { name, dosage };
@@ -41,7 +27,21 @@ const Profile = () => {
   const rows = [
     createData("paracetamol", "2 pills twice a day")
   ]
+  
   const [value, onChange] = useState(new Date());
+
+
+  // const [users, setUsers] = useState('');
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await axios.get('/users/get');
+  //     setUsers(data);
+  //     // console.log('users >>>>', data);
+  //   }
+  //   fetchData();
+  // },[])
+
+
   return (
     <>
       <ResponsiveAppBar />
@@ -59,7 +59,7 @@ const Profile = () => {
                 <Typography>Full Name: </Typography>
               <Typography>DoB:</Typography>
               <Typography>M/F:</Typography>
-              <Typography>Email:</Typography>
+              <Typography>Email: </Typography>
             </CardContent>
           </Card>
         </Grid>

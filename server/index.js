@@ -8,6 +8,7 @@ const cors = require('cors')
 const MongoDBStore = require('connect-mongodb-session')(session) // add this package to store the user session id automatically on mongodb
 // check on your db, you will have another collection (next to people) which is 'mySessions'
 const loginRouter = require('./routes/loginRoutes')
+const userdata = require("./routes/userdata")
 
 const app = express()
 const MAX_AGE = 1000 * 60 * 60 * 3 // 3hrs
@@ -51,9 +52,11 @@ app.use(express.json())
 // ROUTERS
 app.use('/api', loginRouter)
 
+app.use("/userdata",userdata)
+
 // START SERVER
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`)
 })
 
-module.exports = app
+
