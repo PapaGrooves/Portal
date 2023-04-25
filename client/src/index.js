@@ -4,10 +4,14 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { BrowserRouter } from 'react-router-dom'
 import './scss/app.css'
+import { AppContext } from './Context'
+
 
 ReactDOM.render(
   <BrowserRouter>
+  <AppContext>
     <App />
+    </AppContext>
   </BrowserRouter>,
   document.getElementById('root')
 )

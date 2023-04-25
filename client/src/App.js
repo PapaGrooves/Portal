@@ -13,35 +13,9 @@ import theme from './styles/theme'
 
 import { Route, Routes } from 'react-router-dom'
 import { useContext } from 'react'
-import axios from 'axios'
-
-
+// import axios from 'axios'
 
 function App() {
-
-
-  // state = {
-  //   fname: '',
-  //   lname: '',
-  //   email: '',
-  //   dob: '',
-  //   sex: '',
-  // }
-
-  // componentDidMount = () => {
-  //   this.getUserData();
-  // };
-
-  // getUserData = () => {
-  //   axios.get('/api')
-  //   .then(() => {
-  //     // const data = response.data;
-  //     console.log('Data has been recieved!');
-  //   })
-  //   .catch(() => {
-  //     alert('Error retrieving data!');
-  //   });
-  // }
 
   const [loading, setLoading] = useState(true)
   const [userSession, setUserSession] = useState(true)
@@ -81,7 +55,7 @@ function App() {
             <>
             {/* <ResponsiveAppBar />
             <div> */}
-              <Route path='/' element={<Login />} />
+              <Route path='/login' element={<Login />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/department/:id' element={<Department />} />

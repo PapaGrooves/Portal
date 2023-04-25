@@ -1,62 +1,93 @@
-console.log('i am working');
-require('dotenv').config()
-console.log(process.env.DATABASE_CONNECTION_STRING);
-const session = require('express-session')
-const express = require('express')
-const mongoose = require('mongoose')
-const cors = require('cors')
-const MongoDBStore = require('connect-mongodb-session')(session) // add this package to store the user session id automatically on mongodb
-// check on your db, you will have another collection (next to people) which is 'mySessions'
-const loginRouter = require('./routes/loginRoutes')
-const userdata = require("./routes/userdata")
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const cors = require("cors");
+require("./conn");
+const userData = require("./userSchema");
+const { connection } = require("mongoose");
 
-const app = express()
-const MAX_AGE = 1000 * 60 * 60 * 3 // 3hrs
-const port = process.env.PORT || 5001
-
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-// This is where your API is making its initial connection to the database
-console.log('i was loaded')
-mongoose.Promise = global.Promise
-mongoose.connect(process.env.DATABASE_CONNECTION_STRING, {
-  useNewUrlParser: true,
-})
-
-// setting up connect-mongodb-session store
-const mongoDBstore = new MongoDBStore({
-  uri: process.env.DATABASE_CONNECTION_STRING,
-  collection: 'mySessions',
-})
+// Configure middleware
+app.use([
+  bodyParser.urlencoded({ extended: false }), // Parse URL-encoded request bodies
+  bodyParser.json() // Parse JSON request bodies
+]);
 
 app.use(
-  session({
-    secret: 'a1s2d3f4g5h6',
-    name: 'session-id', // cookies name to be put in "key" field in postman
-    store: mongoDBstore,
-    cookie: {
-      maxAge: MAX_AGE, // this is when our cookies will expired and the session will not be valid anymore (user will be log out)
-      sameSite: false,
-      secure: false, // to turn on just in production
-    },
-    resave: true,
-    saveUninitialized: false,
+  cors({
+    origin: true,
+    origin: "http://localhost:3000", // Allow requests from this origin
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "PATCH"], // Allow these HTTP methods
+    credentials: true, // Enable sending and receiving of cookies with cross-origin requests
   })
-)
+);
 
-app.use(cors(corsOptions))
-app.use(express.json())
+console.log("howdy");
 
-// ROUTERS
-app.use('/api', loginRouter)
 
-app.use("/userdata",userdata)
+// Define a route for handling HTTP GET requests at the root path
+app.get("/", (req, res) => {
+  res.send("hellllllo"); // Respond with the text "hellllllo"
+})
 
-// START SERVER
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`)
+// Define a route for handling HTTP POST requests to create a new user
+app.post("/signup", (req, res) => {
+  console.log("signup running")
+
+  const incoming = req.body; // Get the user data from the request body
+  console.log(incoming);
+  res.send("new user created") // Send a response back indicating that a new user has been created
+
+    // Create a new user data object using the Mongoose schema
+  const userPost = new userData({ 
+    email: incoming.data.email, 
+    fname: incoming.data.fname, 
+    lname: incoming.data.lname, 
+    password: incoming.data.password, 
+    rpassword: incoming.data.rpassword, 
+    dob: incoming.data.dob, 
+    sex: incoming.data.sex 
+  });
+
+    // Save the new user data object to the database
+  userPost.save(((err, savedDocument) => {
+    if (err) {
+      console.error('Error saving document', err);
+    } else {
+      console.log('Document saved successfully', savedDocument);
+    }
+  } ) 
+  )
 })
 
 
+// Define a route for handling HTTP POST requests to authenticate a user
+app.post("/login", async (req, res) => {
+  const loginInputs = req.body.data; // Get the login credentials from the request body
+  console.log(loginInputs);
+
+  const userEmail = loginInputs.email; // Get the user's email address
+
+
+  try {
+    // Query the database to find the user's record
+    const dbConn = await connection.db.collection("users").find().toArray();
+    // console.log(dbConn);
+    const findUser = dbConn.find((user) => user.email === userEmail); // Find the user record by email
+    console.log(findUser);
+
+    // Compare the entered password with the one in the database and send a response accordingly
+    if (findUser.password === loginInputs.password) {
+      res.send(findUser);
+    } else {
+      res.send("Wrong email or password");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal server error."); // Send an error response if there's an error
+  }
+})
+
+// Start the server and listen for requests on port 4000
+app.listen(4000, () => {
+  console.log("port 4000");
+})

@@ -1,6 +1,8 @@
+import React from "react";
 import ResponsiveAppBar from "../components/Navigation";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
+import { context } from "../Context";
 import 'react-calendar/dist/Calendar.css';
 import {
   Grid,
@@ -18,9 +20,13 @@ import {
 } from "@mui/material";
 import Patient from "../assets/images/patient.jpg"
 import axios from "axios";
+// import user from "../../../server/userSchema";
 
 const Profile = () => {
 
+  const userData= React.useContext(context);
+  console.log(userData)
+ 
   function createData(name, dosage) {
     return { name, dosage };
   }
@@ -41,7 +47,9 @@ const Profile = () => {
   //   fetchData();
   // },[])
 
-
+  const fullName =  userData.loading ? <p> { " " + userData.dbData.fname + " " + userData.dbData.lname}</p> : null;
+  const dob = userData.loading ? <p>{" " + userData.dbData.dob}</p> : null;
+  const sex = userData.loading ? <p>{" " + userData.dbData.sex.toUpperCase()}</p> : null;
   return (
     <>
       <ResponsiveAppBar />
@@ -56,10 +64,10 @@ const Profile = () => {
           <Card className="card_card card_card_2" sx={{ width: 260 , height:390}}>
             <CardMedia component="img" height="250" image={Patient} alt="" />
             <CardContent className="card_content">
-                <Typography>Full Name: </Typography>
-              <Typography>DoB:</Typography>
-              <Typography>M/F:</Typography>
-              <Typography>Email: </Typography>
+              <Typography className="text">Full Name: {fullName} </Typography>
+              <Typography className="text">DoB: {dob} </Typography>
+              <Typography className="text">M/F: {sex}</Typography>
+              {/* <Typography>Email: { userData.loading ? <p>{userData.dbData.email}</p> : null } </Typography> */}
             </CardContent>
           </Card>
         </Grid>

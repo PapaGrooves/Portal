@@ -16,6 +16,11 @@
       margin: auto auto;
       .card_content {
         padding-bottom: 0;
+        // display: inline;
+        .text {
+          display: flex;
+          flex-direction: row;
+        }
       }
     }
     .card_card {

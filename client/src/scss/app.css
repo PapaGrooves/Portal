@@ -29,6 +29,15 @@ a {
   color: white;
 }
 
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  margin: auto;
+}
+
 .MuiContainer-root.MuiContainer-maxWidthXs.css-fjivc4-MuiContainer-root,
 .MuiContainer-root.MuiContainer-maxWidthSm.css-jo6u7s-MuiContainer-root {
   margin-top: 0;
@@ -63,6 +72,10 @@ a {
 }
 .play_cards .card_grid .card_card_2 .card_content {
   padding-bottom: 0;
+}
+.play_cards .card_grid .card_card_2 .card_content .text {
+  display: flex;
+  flex-direction: row;
 }
 .play_cards .card_grid .card_card {
   background: rgb(122, 164, 214);
