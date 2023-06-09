@@ -48,19 +48,14 @@ const logout = (
 );
 
 
-
-// const pages = jsn.is_admin === 1 ? [play, learn, profile, patients] : [play, learn, profile];
-
 const settings = [logout];
 
 function ResponsiveAppBar() {
   const { user } = useContext(AuthContext);
-  // const adminStatus = localStorage.getItem("user")
-  // const jsn = JSON.parse(adminStatus)
+
 const isAdmin = user?.is_admin === 1;
 
   const pages = isAdmin ? [play, learn, profile, patients] : [play, learn, profile];
-
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -79,8 +74,6 @@ const isAdmin = user?.is_admin === 1;
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  
 
   return (
     <AppBar className="app_bar_wrap" position="static">
