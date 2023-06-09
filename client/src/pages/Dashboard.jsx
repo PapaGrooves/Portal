@@ -4,7 +4,6 @@ import deps from '../components/Depdata';
 import { useState } from 'react';
 import { Grid, Card, CircularProgress, CardContent, Typography, CardMedia, CardActions, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { v4 } from "uuid"
 
 const Dashboard = () => {
 
@@ -36,7 +35,7 @@ const Dashboard = () => {
 
     return (
     <>
-    <ResponsiveAppBar></ResponsiveAppBar>
+    <ResponsiveAppBar/>
     <div className="page_heading">
       <h1>Departments</h1>
       </div>
