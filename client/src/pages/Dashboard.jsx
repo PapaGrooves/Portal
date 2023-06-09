@@ -18,7 +18,7 @@ const Dashboard = () => {
             <>
             <Grid item>
               <Card className="card_card" sx={{ width: 260, height: 490 }}>
-                <CardMedia component="img" height="250" image={`${image}`} alt="" />
+                <CardMedia component="img" height="250" image={`${image}`} alt="department image" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {`${name}`}

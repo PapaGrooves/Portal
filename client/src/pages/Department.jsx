@@ -53,7 +53,7 @@ const Department = () => {
 
       <div className="description">
         <div className="map">
-          <img src={deps[id].map} alt="" />
+          <img src={deps[id].map} alt="department image" />
         </div>
       </div>
     </div>

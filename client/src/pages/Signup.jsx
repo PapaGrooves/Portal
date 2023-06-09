@@ -10,7 +10,6 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [rpassword, setRpassword] = useState("");
   const [dob, setDob] = useState("");
-  const [sex, setSex] = useState("");
 
   const { signup, error, isLoading } = useSignup();
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     console.log("submitted form")
     e.preventDefault();
-    await signup(email, fname, lname, password, rpassword, dob, sex);
+    await signup(email, fname, lname, password, rpassword, dob);
 
     if (rpassword !== password) {
       throw new Error("Password doesn't match");
@@ -33,7 +32,7 @@ const Signup = () => {
       <div className="play_cards signup_card">
         <Grid className="card_grid" container>
           <Card className="card_card ">
-            <form className="signupForm" >
+            <form className="signupForm" onSubmit={handleSubmit} >
               <label htmlFor="email">Email</label>
               <input
                 type="email"
@@ -41,7 +40,7 @@ const Signup = () => {
                 placeholder="Email"
                 value={email}
                 id="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {setEmail(e.target.value)}}
               />
 
               <label htmlFor="fname">First Name</label>
@@ -51,7 +50,7 @@ const Signup = () => {
                 placeholder="First Name"
                 value={fname}
                 id="fname"
-                onChange={(e) => setFname(e.target.value)}
+                onChange={(e) => {setFname(e.target.value)}}
               />
 
               <label htmlFor="lname">Last Name</label>
@@ -61,7 +60,7 @@ const Signup = () => {
                 placeholder="Last Name"
                 value={lname}
                 id="lname"
-                onChange={(e) => setLname(e.target.value)}
+                onChange={(e) => {setLname(e.target.value)}}
               />
 
               <label htmlFor="password">Password</label>
@@ -71,7 +70,7 @@ const Signup = () => {
                 name="password"
                 value={password}
                 id="password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {setPassword(e.target.value)}}
               />
 
               <label htmlFor="rpassword">Repeat Password</label>
@@ -81,7 +80,7 @@ const Signup = () => {
                 placeholder="**********"
                 value={rpassword}
                 id="rpassword"
-                onChange={(e) => setRpassword(e.target.value)}
+                onChange={(e) => {setRpassword(e.target.value)}}
               />
 
               <label htmlFor="dob">Date of Birth</label>
@@ -91,22 +90,10 @@ const Signup = () => {
                 placeholder=""
                 value={dob}
                 id="dob"
-                onChange={(e) => setDob(e.target.value)}
+                onChange={(e) => {setDob(e.target.value)}}
               />
-
-              <label htmlFor="sex">Sex</label>
-              <select
-                name="sex"
-                id="sex"
-                value={sex}
-                onChange={(e) => setSex(e.target.value)}
-              >
-                 <option value="" disabled selected hidden></option>
-                <option value="m">M</option>
-                <option value="f">F</option>
-              </select>
           
-              <Button className="card_button"  disabled={isLoading} onClick={handleSubmit}>
+              <Button className="card_button"  disabled={isLoading} type="submit" >
                 Submit
               </Button>
 

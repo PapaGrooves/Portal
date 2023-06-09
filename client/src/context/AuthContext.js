@@ -20,25 +20,26 @@ export const AuthContextProvider = ({ children }) => {
     })
 
     useEffect(() => {
-        const fetchUserInformation = async () => {
-          const user = JSON.parse(localStorage.getItem("user"));
-          if (user) {
-            try {
-              const response = await axios.get("/api/users", {
-                headers: {
-                  Authorization: `Bearer ${user.token}`
-                }
-              });
-              const additionalUserInfo = response.data; // Assuming response contains the additional user information
-              dispatch({ type: "LOGIN", payload: additionalUserInfo });
-            } catch (error) {
-              // Handle error
-            }
+      const fetchUserInformation = async () => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+          try {
+            const response = await axios.get("/api/users", {
+              headers: {
+                Authorization: `Bearer ${user.token}`
+              }
+            });            
+            const additionalUserInfo = response.data; // Assuming response contains the additional user information
+            dispatch({ type: "LOGIN", payload: additionalUserInfo });
+          } catch (error) {
+            console.log("Failed to fetch user")
           }
-        };
+        }
+      };
     
-        fetchUserInformation();
-      }, []);
+      fetchUserInformation();
+    }, []);
+    
 
     console.log('AuthContext state: ', state)
 

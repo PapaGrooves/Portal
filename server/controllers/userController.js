@@ -9,10 +9,10 @@ const createToken = (_id) => {
 
 const signupUser = async (req, res) => {
     try {
-        const { email, password, fname, lname, dob, rpassword } = req.body;
+        const { email, fname, lname, password, rpassword, dob } = req.body;
         console.log(req.body)
         // Validation
-        if (!email || !fname || !lname || !dob || !password || !rpassword) {
+        if (!email || !fname || !lname || !password || !rpassword || !dob  ) {
             throw new Error("All fields must be filled");
         }
         if (!validator.isEmail(email)) {
@@ -31,7 +31,7 @@ const signupUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
 
-        const user = await User.create({ email, fname, lname, dob, password: hash, rpassword });
+        const user = await User.create({ email, fname, lname,  password: hash, rpassword, dob, });
 
         const token = createToken(user._id);
 
@@ -57,6 +57,7 @@ const loginUser = async (req, res) => {
             throw new Error("Incorrect email or password");
         }
 
+    
         const match = await bcrypt.compare(password, user.password);
 
         if (!match) {
@@ -67,7 +68,7 @@ const loginUser = async (req, res) => {
         const token = createToken(user._id);
 
         console.log(user)
-        res.status(200).json({ email, token, is_admin: user.is_admin, fname: user.fname, lname: user.lname, sex: user.sex, dob: user.dob, medication: user.medication, doctor: user.doctor, appointment: user.appointment, filename: user.filename, imagePath: user.imagePath });
+        res.status(200).json({ email, token, is_admin: user.is_admin, fname: user.fname, lname: user.lname, dob: user.dob, medication: user.medication, doctor: user.doctor, appointment: user.appointment, filename: user.filename, imagePath: user.imagePath });
     } catch (error) {
         console.log(error);
         res.status(400).json({ error: error.message });

@@ -33,14 +33,11 @@ const userSchema = new Schema({
     medication: {
         type: String,
     },
-    sex: {
-        type: String
-    },
     appointment: {
         type: String
     },
     filename: {
-        type: String``
+        type: String
     },
     imagePath: {
         type: String
