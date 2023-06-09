@@ -1,28 +1,53 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import { Link } from "react-router-dom";
+import { v4 } from "uuid";
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
+// import Patient from "../assets/images/patient.jpg"
 
-// const logOut = () => {
-//   window.localStorage.clear();
-// }
+const play = (
+  <Link style={{ padding: "2rem" }} to={"/play"}>
+    Play
+  </Link>
+);
+const learn = (
+  <Link style={{ padding: "2rem" }} to={"/learn"}>
+    Learn
+  </Link>
+);
+const profile = (
+  <Link style={{ padding: "2rem" }} to={"/profile"}>
+    Profile
+  </Link>
+);
+const patients = (
+  <Link style={{ padding: "2rem" }} to={"/patients"}>
+    Patients
+  </Link>
+);
+const logout = (
+  <Link
+    onClick={window.localStorage.clear()}
+    style={{ padding: "2rem" }}
+    to={"/"}
+  >
+    Logout
+  </Link>
+);
 
-const play = <Link style={{padding: "2rem"}} to={"/play"}>Play</Link>
-const learn = <Link style={{padding: "2rem"}} to={"/learn"}>Learn</Link>
-const profile = <Link style={{padding: "2rem"}} to={"/profile"}>Profile</Link>
-const logout = <Link onClick={window.localStorage.clear()} style={{padding: "2rem"}} to={"/"}>Logout</Link>
-
-const pages = [play, learn, profile];
+const pages = [play, learn, profile, patients];
 const settings = [logout];
 
 function ResponsiveAppBar() {
@@ -44,13 +69,13 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const { user } = useContext(AuthContext);
+
   return (
-    <AppBar class="app_bar_wrap" position="static">
-
-      <Container maxWidth="xl" className='app_bar'>
+    <AppBar className="app_bar_wrap" position="static">
+      <Container maxWidth="xl" className="app_bar">
         <Toolbar disableGutters>
-
-{/* Logo at large screen size */}
+          {/* Logo at large screen size */}
           <Typography
             variant="h6"
             noWrap
@@ -59,18 +84,18 @@ function ResponsiveAppBar() {
             href="/dashboard"
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             HospitalPortal
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             {/* Burger menu on small screensize */}
             <IconButton
               size="large"
@@ -86,29 +111,33 @@ function ResponsiveAppBar() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: "bottom",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: { xs: "block", md: "none" },
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem
+                  className="menu_item"
+                  key={v4()}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography className="menu_text" textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-      
-      {/* Logo at smaller screen size */}
+
+          {/* Logo at smaller screen size */}
           <Typography
             variant="h5"
             noWrap
@@ -116,24 +145,24 @@ function ResponsiveAppBar() {
             href="/dashboard"
             sx={{
               mr: 2,
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             HospitalPortal
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={v4()}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
               </Button>
@@ -143,28 +172,31 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar src={user.imagePath} alt={user.filename}/>
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem
+                  key={v4()}
+                  onClick={handleCloseUserMenu}
+                >
+                  <Typography className="menu_text" textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>

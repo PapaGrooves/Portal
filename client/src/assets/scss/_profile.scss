@@ -1,0 +1,58 @@
+.profile_cards {
+display: flex;
+flex-wrap: wrap;
+gap: 32px;
+justify-content: center;
+
+    .p_card {
+        width: 300px;
+        aspect-ratio: 10/16;
+        background-color: rgb(10, 117, 180);
+        border-radius: 16px;
+        overflow: hidden;
+        
+        h3 {
+            padding: 16px;
+            text-align: center;
+        }
+    }
+
+    .patient_card {
+        .image {
+            width: 100%;
+            aspect-ratio: 1/1;
+            img {
+                width: 100%;
+            }
+        }
+
+        .info {
+            margin: 16px;
+            p{
+                margin-bottom: 8px;
+            }
+        }
+    }
+
+    .calendar_card {
+        text-align: center;
+    }
+
+    .medication_card {
+
+text-align: center;
+        .doc_card {
+            width: 90%;
+            height: 64px;
+            background: gray;
+            margin: auto;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 16px;
+            padding: 8px;
+        }
+    }
+}
+

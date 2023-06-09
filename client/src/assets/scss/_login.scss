@@ -1,0 +1,62 @@
+// Styling for LOGIN & SIGNUP, mostly overriding MaterialUI
+// hence the outlandish class names
+
+.MuiContainer-root.MuiContainer-maxWidthXs.css-fjivc4-MuiContainer-root,
+.MuiContainer-root.MuiContainer-maxWidthSm.css-jo6u7s-MuiContainer-root {
+  margin-top: 0;
+}
+
+.css-o2gw5x-MuiStack-root,
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation6.css-ufy8v2-MuiPaper-root {
+  // border-bottom-right-radius: 1rem;
+  // border-bottom-left-radius: 1rem;
+  border-radius: 0.5rem;
+}
+
+.login_wrap,
+.signup_wrap {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-self: center;
+}
+
+.signupForm {
+  margin: 32px;
+
+  .card_button {
+    margin-top: 16px;
+    border: 2px white solid;
+    transition: 1s;
+    &:hover {
+      background: rgb(202, 202, 202);
+      transition: 1s;
+    }
+  }
+}
+
+.signup_card {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card_grid {
+    margin: auto;
+    margin-top: 20vh;
+
+    .card_card {
+      form {
+        input {
+          padding: 8px;
+        }select {
+          padding: 8px;
+        }
+      }
+    }
+  }
+}

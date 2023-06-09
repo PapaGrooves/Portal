@@ -1,5 +1,3 @@
-
-
 .play_cards {
   width: 100vw;
   height: 100%;
@@ -40,7 +38,7 @@
     .button_wrap {
       display: flex;
       flex-direction: column;
-      align-items: end;
+      align-items: flex-end;
       // justify-content: end;
 
     .card_button {
@@ -64,8 +62,19 @@ color: white;
 .app_bar {
   background-color: rgba(0 ,0 ,0, 0.75);
 max-width: 100%;
+.menu_item {
+  background: rgb(70, 70, 70);
+  color: black;
 }
 }
+}
+
+.menu_text {
+  background: black;
+  border-radius: 4px;
+}
+
+
 
 .signup_wrap {
   // margin: 192px auto;

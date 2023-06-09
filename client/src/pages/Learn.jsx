@@ -39,7 +39,7 @@ const Learn = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                <a href="https://www.youtube.com/watch?v=J6Po-Uc7IPY" target="_blank"> 
+                <a href="https://www.youtube.com/watch?v=J6Po-Uc7IPY" target="_blank" rel="noopener"> 
                   <Button className="card_button" size="small">Learn more...</Button>
                   </a>
                 </CardActions>
@@ -60,7 +60,7 @@ const Learn = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                <a href="https://www.youtube.com/watch?v=NaoOYzCvfs8" target="_blank"> 
+                <a href="https://www.youtube.com/watch?v=NaoOYzCvfs8" target="_blank" rel="noopener"> 
                   <Button className="card_button" size="small">Learn more...</Button>
                   </a>
                 </CardActions>
@@ -81,7 +81,7 @@ const Learn = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                <a href="https://www.youtube.com/watch?v=Q_Pa6KFL1Nw" target="_blank"> 
+                <a href="https://www.youtube.com/watch?v=Q_Pa6KFL1Nw" target="_blank" rel="noopener"> 
                   <Button className="card_button" size="small">Learn more...</Button>
                   </a>
                 </CardActions>
